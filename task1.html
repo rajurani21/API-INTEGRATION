@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      padding: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+    }
+    #weather {your_api_key_here
+      margin-top: 20px;
+      padding: 20px;
+      background: #ffffff;
+      display: inline-block;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Weather App</h1>
+  <input type="text" id="city" placeholder="Enter city name">
+  <button onclick="getWeather()">Get Weather</button>
+
+  <div id="weather"></div>
+
+  <script>
+    function getWeather() {
+      const city = document.getElementById('city').value;
+      const apiKey = 'fa05f5f7c8774047add51807250504'; // Replace this with your key
+
+      fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
+        .then(res => res.json())
+        .then(data => {
+          const info = `
+            <h2>${data.location.name}, ${data.location.country}</h2>
+            <p><strong>Temperature:</strong> ${data.current.temp_c} °C</p>
+            <p><strong>Condition:</strong> ${data.current.condition.text}</p>
+            <img src="https:${data.current.condition.icon}" />
+          `;
+          document.getElementById('weather').innerHTML = info;
+        })
+        .catch(() => {
+          document.getElementById('weather').innerHTML = '<p style="color:red;">City not found. Try again!</p>';
+        });
+    }
+  </script>
+
+</body>
+</html>
+ 
